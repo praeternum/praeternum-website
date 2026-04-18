@@ -4,17 +4,21 @@ const steps = [
   {
     number: '01',
     title: '商談中にPortalを開く',
-    body: 'スマホまたはタブレットから専用Portalにログイン。お客さまと画面を共有しながら進行できます。',
+    body: ['スマホ等から専用Portalにログイン。お客さまと画面を共有しながら進行できます。'],
   },
   {
     number: '02',
     title: '空き枠から工事日を選ぶ',
-    body: 'エリア・機器種別・希望日に応じて、空き枠がリアルタイムで表示。お客さまと一緒に日程を決定します。',
+    body: ['エリア・機器種別・希望日に応じて、空き枠がリアルタイムで表示。お客さまと一緒にその場で日程を決定します。'],
   },
   {
     number: '03',
-    title: 'あとはPraeternumにお任せ',
-    body: '職人の手配、現場管理、完了報告書作成まで、すべて弊社で実施。完了時に結果をお送りします。',
+    title: 'あとは工事日を待つだけ',
+    body: [
+      '商品は工事日までに設置先へご手配ください(担当営業様の持参も可)。',
+      '当日の技術者派遣・施工・完了報告書の作成まで、すべて弊社で実施。',
+      '工事完了後に報告書をお送りします。',
+    ],
   },
 ];
 ---
@@ -25,7 +29,6 @@ const steps = [
       <span class="text-xs font-medium tracking-[0.2em] gradient-text uppercase">How it works</span>
       <h2 class="font-display text-3xl md:text-4xl font-medium mt-3 text-brand-ink">3ステップで、工事完了まで</h2>
     </div>
-
     <ol class="space-y-5">
       {
         steps.map((step) => (
@@ -35,11 +38,16 @@ const steps = [
             </div>
             <div class="flex-1 bg-white p-6 md:p-7 rounded-2xl border border-gray-100">
               <h3 class="text-lg font-medium mb-2">{step.title}</h3>
-              <p class="text-sm text-gray-600 leading-relaxed">{step.body}</p>
+              <div class="text-sm text-gray-600 leading-relaxed space-y-1.5">
+                {step.body.map((line) => (
+                  <p>{line}</p>
+                ))}
+              </div>
             </div>
           </li>
         ))
       }
     </ol>
   </div>
+</section>
 </section>
