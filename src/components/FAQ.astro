@@ -1,0 +1,59 @@
+---
+// Section 6: FAQ - 5 common questions
+const faqs = [
+  {
+    q: '本当に商談中に工事日が決まるんですか？',
+    a: 'はい。商談中にスマホまたはタブレットから専用Portalにログインし、工事空き枠を確認いただきます。お客さまと画面を共有しながら日程を決定し、そのまま契約書に反映できます。',
+    open: true,
+  },
+  {
+    q: '料金はどのくらいですか？',
+    a: '工事内容、機器点数、現場条件により異なりますので、お問い合わせフォームより案件内容をご共有ください。折り返しお見積もりをお送りします。',
+    open: false,
+  },
+  {
+    q: '対応エリアはどこまでですか？',
+    a: '現在は近畿エリア（大阪府・京都府・兵庫県・滋賀県・奈良県・和歌山県）に対応しています。全国展開に向けて、順次対応エリアを拡大予定です。',
+    open: false,
+  },
+  {
+    q: '緊急対応は可能ですか？',
+    a: '契約が固まったあと、最短36時間後から現場着手が可能です。より早い対応が必要な場合は、お問い合わせフォームに「緊急」の旨をご記載ください。可能な限り対応いたします。',
+    open: false,
+  },
+  {
+    q: '契約の流れを教えてください',
+    a: 'お問い合わせ → ヒアリング → お見積もり提示 → Portalアカウント発行 → 契約の順で進みます。初回Portal利用開始まで、通常3〜5営業日程度でご案内できます。',
+    open: false,
+  },
+];
+---
+
+<section id="faq" class="bg-[#FAFAF7] py-24 md:py-28">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center mb-14">
+      <span class="text-xs font-medium tracking-[0.2em] gradient-text uppercase">FAQ</span>
+      <h2 class="font-display text-3xl md:text-4xl font-medium mt-3 text-brand-ink">よくある質問</h2>
+    </div>
+
+    <div class="space-y-3">
+      {
+        faqs.map((faq) => (
+          <details class="bg-white rounded-xl border border-gray-100 overflow-hidden" open={faq.open}>
+            <summary class="cursor-pointer px-6 py-5 flex justify-between items-center font-medium text-brand-ink">
+              <span>{faq.q}</span>
+              <span class="faq-icon text-2xl text-gray-400 leading-none">＋</span>
+            </summary>
+            <div class="px-6 pb-6">
+              <p class="text-sm text-gray-600 leading-relaxed pt-1 border-t border-gray-100">{faq.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+
+    <p class="text-center mt-10 text-sm text-gray-600">
+      その他のご質問は、<a href="#contact" class="text-indigo-600 hover:underline">お問い合わせ</a>からどうぞ。
+    </p>
+  </div>
+</section>

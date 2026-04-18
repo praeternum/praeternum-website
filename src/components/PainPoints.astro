@@ -1,0 +1,41 @@
+---
+// Section 2: 共感／ペイン - 3 common pain points Shops face
+const pains = [
+  {
+    number: '01',
+    title: '工事日調整で、\n契約の熱が冷める',
+    body: '契約は取れた。でも工事日調整で数日お待たせする間に、お客さまの温度は下がっていく。最悪、話が流れることも。',
+  },
+  {
+    number: '02',
+    title: '完了報告書が手書きで、\n文字がつぶれて読めない',
+    body: '現場から上がってくる手書きの報告書。文字がつぶれて判読できず、お客さまにお渡しする前に整理し直す手間が発生する。',
+  },
+  {
+    number: '03',
+    title: '工事代金が、\n完了後に変動する',
+    body: '当初の見積もりから、現場で追加作業が発生するなどで金額が変動。利益計算が狂い、次の案件の価格設定にも影響が出る。',
+  },
+];
+---
+
+<section class="bg-[#FAFAF7] py-24 md:py-28">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <span class="text-xs font-medium tracking-[0.2em] gradient-text uppercase">Pain points</span>
+      <h2 class="font-display text-3xl md:text-4xl font-medium mt-3 text-brand-ink">こんな経験、ありませんか？</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {
+        pains.map((pain) => (
+          <article class="bg-white p-8 rounded-2xl border border-gray-100">
+            <div class="font-display text-5xl font-medium gradient-text leading-none mb-6">{pain.number}</div>
+            <h3 class="text-lg font-medium mb-4 leading-relaxed whitespace-pre-line">{pain.title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{pain.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

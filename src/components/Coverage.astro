@@ -1,0 +1,61 @@
+---
+// Section 5: 対応範囲 - coverage of work types and regions
+const workTypes = [
+  'アクセスポイント設置',
+  'セキュリティスイッチ（基本・VLAN）',
+  'ルーター設置（VPN有・無）',
+  'UTM設置',
+  'サーバー移行・設置',
+  'VPN拠点間接続',
+  'その他ネットワーク工事（要相談）',
+];
+
+const prefectures = '大阪府・京都府・兵庫県・滋賀県・奈良県・和歌山県';
+---
+
+<section id="coverage" class="py-24 md:py-28 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <span class="text-xs font-medium tracking-[0.2em] gradient-text uppercase">Coverage</span>
+      <h2 class="font-display text-3xl md:text-4xl font-medium mt-3 text-brand-ink">対応工事と対応エリア</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 md:gap-16">
+      <div>
+        <h3 class="text-lg font-medium mb-6 text-brand-ink">対応工事</h3>
+        <ul class="space-y-3.5">
+          {
+            workTypes.map((type, i) => (
+              <li
+                class={`flex gap-3 items-center ${
+                  i < workTypes.length - 1 ? 'pb-3 border-b border-gray-100' : ''
+                }`}
+              >
+                <span class="w-1.5 h-1.5 rounded-full gradient-bg flex-shrink-0"></span>
+                <span class="text-sm text-gray-700">{type}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="text-xs text-gray-500 mt-6 leading-relaxed">
+          ※料金は案件内容に応じて個別にお見積もりします。詳細はお問い合わせください。
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-medium mb-6 text-brand-ink">対応エリア</h3>
+        <div class="relative overflow-hidden rounded-2xl border border-gray-100 p-8 md:p-10">
+          <div class="absolute inset-0 opacity-[0.06] gradient-bg" aria-hidden="true"></div>
+          <div class="relative">
+            <div class="font-display text-4xl md:text-5xl font-medium mb-4 gradient-text">近畿エリア</div>
+            <p class="text-sm text-gray-700 leading-relaxed mb-5">{prefectures}</p>
+            <div class="inline-flex items-center gap-2 text-xs text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+              全国展開に向けて、順次拡大予定
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
