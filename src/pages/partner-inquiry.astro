@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout
   title="協力会社募集｜Praeternum"
   description="ネットワーク工事の協力会社を募集しています。LINEとスマホで完結する、手離れのよい案件発注。"
+  noindex={true}
 >
   <Header />
   <main class="bg-white">
@@ -93,7 +93,10 @@ import Footer from '../components/Footer.astro';
           ※個人情報は資料送付およびご連絡以外の目的では使用いたしません。
         </p>
       </div>
+
+      <div class="mt-16 pt-8 border-t border-gray-100 text-center">
+        <p class="text-xs text-gray-500">© 2026 Praeternum. All rights reserved.</p>
+      </div>
     </section>
   </main>
-  <Footer />
 </BaseLayout>
