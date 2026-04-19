@@ -1,0 +1,345 @@
+---
+// src/components/AnimatedDemo.astro
+// 商談中の工事日選択フローを擬似UIで表現するアニメーションコンポーネント
+// 外部ライブラリ・JS不使用、CSSアニメーションのみで動作
+---
+
+<section class="relative bg-gradient-to-b from-slate-50 via-white to-white py-20 md:py-28 overflow-hidden">
+  <div class="mx-auto max-w-5xl px-6">
+    <div class="text-center mb-12 md:mb-16">
+      <p class="text-xs font-medium text-slate-500 tracking-[0.2em] uppercase mb-3">In Action</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+        空き枠をタップ、その場で確定。
+      </h2>
+      <p class="text-slate-600 max-w-xl mx-auto leading-relaxed">
+        商談中のスマホから、数タップで工事日が決まる。
+      </p>
+    </div>
+
+    <div class="flex justify-center">
+      <div class="demo-phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-header">
+            <div class="header-row">
+              <span class="header-back">‹</span>
+              <span class="header-title">工事日を選ぶ</span>
+              <span class="header-spacer"></span>
+            </div>
+            <div class="header-month">2026年5月</div>
+          </div>
+
+          <div class="calendar">
+            <div class="weekdays">
+              <span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span><span>日</span>
+            </div>
+            <div class="days">
+              <div class="day empty"></div>
+              <div class="day empty"></div>
+              <div class="day empty"></div>
+              <div class="day">1</div>
+              <div class="day">2</div>
+              <div class="day">3</div>
+              <div class="day">4</div>
+              <div class="day">5</div>
+              <div class="day">6</div>
+              <div class="day available">7</div>
+              <div class="day">8</div>
+              <div class="day available">9</div>
+              <div class="day">10</div>
+              <div class="day">11</div>
+              <div class="day available">12</div>
+              <div class="day">13</div>
+              <div class="day">14</div>
+              <div class="day target">15</div>
+              <div class="day">16</div>
+              <div class="day available">17</div>
+              <div class="day">18</div>
+              <div class="day">19</div>
+              <div class="day available">20</div>
+              <div class="day">21</div>
+              <div class="day">22</div>
+              <div class="day">23</div>
+              <div class="day available">24</div>
+              <div class="day">25</div>
+              <div class="day">26</div>
+              <div class="day">27</div>
+              <div class="day">28</div>
+              <div class="day available">29</div>
+              <div class="day">30</div>
+              <div class="day">31</div>
+            </div>
+          </div>
+
+          <div class="confirm-btn">
+            <span class="btn-label">5月15日（木） で確定する</span>
+          </div>
+
+          <div class="toast">
+            <span class="toast-icon">✓</span>
+            <span class="toast-text">5月15日で確定しました</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-xs text-slate-400 mt-8">※ 画面はイメージです</p>
+  </div>
+</section>
+
+<style>
+  /* ==== スマホフレーム ==== */
+  .demo-phone {
+    width: 280px;
+    height: 560px;
+    background: #0f172a;
+    border-radius: 42px;
+    padding: 10px;
+    position: relative;
+    box-shadow:
+      0 25px 50px -12px rgba(15, 23, 42, 0.25),
+      0 0 0 1px rgba(15, 23, 42, 0.1);
+  }
+
+  @media (min-width: 768px) {
+    .demo-phone {
+      width: 300px;
+      height: 600px;
+    }
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 22px;
+    background: #0f172a;
+    border-radius: 0 0 14px 14px;
+    z-index: 10;
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ==== ヘッダー ==== */
+  .screen-header {
+    padding: 42px 20px 16px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .header-back {
+    color: #94a3b8;
+    font-size: 22px;
+    line-height: 1;
+    width: 20px;
+  }
+
+  .header-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+  }
+
+  .header-spacer {
+    width: 20px;
+  }
+
+  .header-month {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  /* ==== カレンダー ==== */
+  .calendar {
+    padding: 14px 18px 12px;
+  }
+
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 8px;
+  }
+
+  .weekdays span {
+    text-align: center;
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 500;
+    padding: 4px 0;
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+
+  .day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #cbd5e1;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: none;
+  }
+
+  .day.empty {
+    visibility: hidden;
+  }
+
+  .day.available {
+    color: #0f172a;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    font-weight: 500;
+    animation: pulseAvailable 2.4s ease-in-out infinite;
+  }
+
+  .day.target {
+    color: #0f172a;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    font-weight: 500;
+    animation: pulseAvailable 2.4s ease-in-out infinite, targetSelect 8s ease-in-out infinite;
+  }
+
+  @keyframes pulseAvailable {
+    0%, 100% { opacity: 0.78; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes targetSelect {
+    0%, 35% {
+      background: rgba(16, 185, 129, 0.08);
+      color: #0f172a;
+      border-color: rgba(16, 185, 129, 0.25);
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(0.88);
+      background: rgba(37, 99, 235, 0.15);
+      border-color: #2563eb;
+    }
+    46%, 90% {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+      transform: scale(1);
+      animation-timing-function: ease-out;
+    }
+    100% {
+      background: rgba(16, 185, 129, 0.08);
+      color: #0f172a;
+      border-color: rgba(16, 185, 129, 0.25);
+      transform: scale(1);
+    }
+  }
+
+  /* ==== 確定ボタン ==== */
+  .confirm-btn {
+    position: absolute;
+    bottom: 28px;
+    left: 20px;
+    right: 20px;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0.25;
+    animation: btnActivate 8s ease-in-out infinite;
+  }
+
+  @keyframes btnActivate {
+    0%, 40% { opacity: 0.25; transform: scale(1); }
+    48%, 85% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(0.97); }
+    95%, 100% { opacity: 0.25; transform: scale(1); }
+  }
+
+  /* ==== トースト ==== */
+  .toast {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(15, 23, 42, 0.95);
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    white-space: nowrap;
+    animation: toastAppear 8s ease-in-out infinite;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.3);
+    backdrop-filter: blur(8px);
+  }
+
+  .toast-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: #10b981;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  @keyframes toastAppear {
+    0%, 88% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    92%, 96% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  /* ==== アクセシビリティ: アニメーション低減設定に配慮 ==== */
+  @media (prefers-reduced-motion: reduce) {
+    .day.available,
+    .day.target,
+    .confirm-btn,
+    .toast {
+      animation: none;
+    }
+    .day.target {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+    .confirm-btn {
+      opacity: 1;
+    }
+    .toast {
+      display: none;
+    }
+  }
+</style>
