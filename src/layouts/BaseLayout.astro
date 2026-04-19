@@ -36,5 +36,73 @@ const {
   </head>
   <body>
     <slot />
+
+    <!-- スクロール連動フェードイン（全セクション自動適用） -->
+    <script is:inline>
+      (function () {
+        function init() {
+          if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.reveal-on-scroll').forEach(function (el) {
+              el.classList.add('in-view');
+            });
+            return;
+          }
+
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('in-view');
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -80px 0px' }
+          );
+
+          // main の直接の子要素すべてに自動適用
+          var targets = document.querySelectorAll('main > *');
+          targets.forEach(function (el, index) {
+            el.classList.add('reveal-on-scroll');
+            // 最初の要素（通常Hero）はページロード時すぐ表示
+            if (index === 0) {
+              el.classList.add('in-view');
+            } else {
+              observer.observe(el);
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+
+    <style is:global>
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(32px);
+        transition:
+          opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal-on-scroll.in-view {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal-on-scroll {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
   </body>
 </html>
