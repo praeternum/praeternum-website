@@ -35,6 +35,14 @@ const {
     />
   </head>
   <body>
+    <!-- 全画面固定の背景アニメーションレイヤー -->
+    <div class="site-bg" aria-hidden="true">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+      <div class="blob blob-4"></div>
+    </div>
+
     <slot />
 
     <!-- スクロール連動フェードイン（全セクション自動適用） -->
@@ -47,7 +55,6 @@ const {
             });
             return;
           }
-
           var observer = new IntersectionObserver(
             function (entries) {
               entries.forEach(function (entry) {
@@ -59,12 +66,9 @@ const {
             },
             { threshold: 0.12, rootMargin: '0px 0px -80px 0px' }
           );
-
-          // main の直接の子要素すべてに自動適用
           var targets = document.querySelectorAll('main > *');
           targets.forEach(function (el, index) {
             el.classList.add('reveal-on-scroll');
-            // 最初の要素（通常Hero）はページロード時すぐ表示
             if (index === 0) {
               el.classList.add('in-view');
             } else {
@@ -72,7 +76,6 @@ const {
             }
           });
         }
-
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', init);
         } else {
@@ -82,6 +85,87 @@ const {
     </script>
 
     <style is:global>
+      /* ==== 全画面背景アニメーション ==== */
+      .site-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+        background: #ffffff;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        will-change: transform;
+      }
+
+      .blob-1 {
+        width: 480px;
+        height: 480px;
+        background: rgba(37, 99, 235, 0.22);
+        top: -8%;
+        left: -8%;
+        animation: blobFloat1 22s ease-in-out infinite;
+      }
+
+      .blob-2 {
+        width: 420px;
+        height: 420px;
+        background: rgba(16, 185, 129, 0.18);
+        top: 28%;
+        right: -12%;
+        animation: blobFloat2 26s ease-in-out infinite;
+      }
+
+      .blob-3 {
+        width: 540px;
+        height: 540px;
+        background: rgba(99, 102, 241, 0.16);
+        bottom: -15%;
+        left: 25%;
+        animation: blobFloat3 30s ease-in-out infinite;
+      }
+
+      .blob-4 {
+        width: 380px;
+        height: 380px;
+        background: rgba(14, 165, 233, 0.15);
+        top: 58%;
+        left: -8%;
+        animation: blobFloat4 28s ease-in-out infinite;
+      }
+
+      @keyframes blobFloat1 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(20vw, 15vh) scale(1.15); }
+        66% { transform: translate(-5vw, 30vh) scale(0.92); }
+      }
+      @keyframes blobFloat2 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(-18vw, 20vh) scale(1.1); }
+        66% { transform: translate(-28vw, -12vh) scale(0.95); }
+      }
+      @keyframes blobFloat3 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(15vw, -22vh) scale(0.88); }
+        66% { transform: translate(-12vw, -35vh) scale(1.18); }
+      }
+      @keyframes blobFloat4 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(25vw, -18vh) scale(1.1); }
+        66% { transform: translate(18vw, 22vh) scale(0.95); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .blob {
+          animation: none !important;
+        }
+      }
+
+      /* ==== スクロール連動フェードイン ==== */
       .reveal-on-scroll {
         opacity: 0;
         transform: translateY(32px);
