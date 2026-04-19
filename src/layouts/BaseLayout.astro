@@ -42,14 +42,14 @@ const {
         function init() {
           // Hero（main直下の1番目の子）に一筆書き背景を挿入
           var hero = document.querySelector('main > *:first-child');
-          if (hero && !hero.querySelector('.hero-bg')) {
-            hero.classList.add('has-hero-bg');
+          if (hero && !hero.querySelector('.pr-hero-layer')) {
+            hero.classList.add('pr-has-hero-layer');
             var bg = document.createElement('div');
-            bg.className = 'hero-bg';
+            bg.className = 'pr-hero-layer';
             bg.setAttribute('aria-hidden', 'true');
             bg.innerHTML =
-              '<svg class="hero-bg-svg" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">' +
-              '<text x="600" y="200" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="210" font-weight="600" fill="none" stroke="#2563eb" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" letter-spacing="-6" class="logo-stroke">Praeternum</text>' +
+              '<svg class="pr-hero-layer-svg" viewBox="0 0 1400 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">' +
+              '<text x="700" y="190" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="180" font-weight="600" fill="none" stroke="#2563eb" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" letter-spacing="-4" class="pr-logo-stroke">Praeternum</text>' +
               '</svg>';
             hero.insertBefore(bg, hero.firstChild);
           }
@@ -92,17 +92,18 @@ const {
 
     <style is:global>
       /* ==== Hero 一筆書き背景 ==== */
-      main > *:first-child.has-hero-bg {
+      /* Hero.astroの既存 .hero-bg クラスと衝突しないよう pr-* プレフィックス */
+      main > *:first-child.pr-has-hero-layer {
         position: relative;
         overflow: hidden;
       }
 
-      main > *:first-child.has-hero-bg > *:not(.hero-bg) {
+      main > *:first-child.pr-has-hero-layer > *:not(.pr-hero-layer) {
         position: relative;
         z-index: 1;
       }
 
-      .hero-bg {
+      .pr-hero-layer {
         position: absolute;
         inset: 0;
         z-index: 0;
@@ -110,16 +111,16 @@ const {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0 5%;
+        padding: 0 8%;
       }
 
-      .hero-bg-svg {
+      .pr-hero-layer-svg {
         width: 100%;
         height: auto;
-        max-width: 1400px;
+        max-width: 1100px;
       }
 
-      .logo-stroke {
+      .pr-logo-stroke {
         stroke-dasharray: 5000;
         stroke-dashoffset: 5000;
         opacity: 0;
@@ -153,7 +154,7 @@ const {
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .logo-stroke {
+        .pr-logo-stroke {
           animation: none;
           stroke-dashoffset: 0;
           opacity: 0.1;
