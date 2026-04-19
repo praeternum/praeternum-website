@@ -1,0 +1,251 @@
+---
+// src/components/NetworkAnimation.astro
+// Praeternumのブランドイメージを抽象表現するアニメーション
+// 中央ハブ→外周ノードへ光が流れる、ノードがパルス、波紋が広がる
+// 外部ライブラリ・JS不使用、SVG+CSSアニメーションのみ
+---
+
+<section class="relative bg-gradient-to-b from-white via-slate-50/60 to-white py-24 md:py-32 overflow-hidden">
+  <!-- 背景のambient glow -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <div class="relative mx-auto max-w-6xl px-6">
+    <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+      <!-- コピー -->
+      <div class="text-center md:text-left order-2 md:order-1">
+        <p class="text-xs font-medium text-slate-500 tracking-[0.25em] uppercase mb-4">Network</p>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-5 tracking-tight leading-[1.25]">
+          点と点を、<br />つなぐ。
+        </h2>
+        <p class="text-slate-600 leading-relaxed max-w-md mx-auto md:mx-0">
+          販売店と技術者、その間のあらゆる工程を。<br class="hidden md:inline" />
+          Praeternumは見えないネットワークとして、現場を支えます。
+        </p>
+      </div>
+
+      <!-- アニメーション -->
+      <div class="relative w-full max-w-md mx-auto aspect-square order-1 md:order-2">
+        <svg
+          class="network-svg w-full h-full"
+          viewBox="0 0 500 500"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <!-- 波紋 -->
+          <circle class="ripple ripple-1" cx="250" cy="250" r="80" />
+          <circle class="ripple ripple-2" cx="250" cy="250" r="80" />
+          <circle class="ripple ripple-3" cx="250" cy="250" r="80" />
+
+          <!-- 線（ハブ→各ノード） -->
+          <line class="link" x1="250" y1="250" x2="90" y2="130" />
+          <line class="link" x1="250" y1="250" x2="410" y2="100" />
+          <line class="link" x1="250" y1="250" x2="130" y2="400" />
+          <line class="link" x1="250" y1="250" x2="420" y2="380" />
+          <line class="link" x1="250" y1="250" x2="250" y2="60" />
+          <line class="link" x1="250" y1="250" x2="250" y2="440" />
+
+          <!-- 光の粒（ハブから外周へ流れる） -->
+          <circle class="pulse pulse-1" cx="250" cy="250" r="4" />
+          <circle class="pulse pulse-2" cx="250" cy="250" r="4" />
+          <circle class="pulse pulse-3" cx="250" cy="250" r="4" />
+          <circle class="pulse pulse-4" cx="250" cy="250" r="4" />
+          <circle class="pulse pulse-5" cx="250" cy="250" r="4" />
+          <circle class="pulse pulse-6" cx="250" cy="250" r="4" />
+
+          <!-- 外周ノード -->
+          <g class="node-group node-group-1">
+            <circle class="node-halo" cx="90" cy="130" r="14" />
+            <circle class="node" cx="90" cy="130" r="6" />
+          </g>
+          <g class="node-group node-group-2">
+            <circle class="node-halo" cx="410" cy="100" r="14" />
+            <circle class="node" cx="410" cy="100" r="6" />
+          </g>
+          <g class="node-group node-group-3">
+            <circle class="node-halo" cx="130" cy="400" r="14" />
+            <circle class="node" cx="130" cy="400" r="6" />
+          </g>
+          <g class="node-group node-group-4">
+            <circle class="node-halo" cx="420" cy="380" r="14" />
+            <circle class="node" cx="420" cy="380" r="6" />
+          </g>
+          <g class="node-group node-group-5">
+            <circle class="node-halo" cx="250" cy="60" r="14" />
+            <circle class="node" cx="250" cy="60" r="6" />
+          </g>
+          <g class="node-group node-group-6">
+            <circle class="node-halo" cx="250" cy="440" r="14" />
+            <circle class="node" cx="250" cy="440" r="6" />
+          </g>
+
+          <!-- 中央ハブ -->
+          <g class="hub-group">
+            <circle class="hub-halo" cx="250" cy="250" r="28" />
+            <circle class="hub-ring" cx="250" cy="250" r="18" />
+            <circle class="hub" cx="250" cy="250" r="11" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ambient-glow {
+    position: absolute;
+    top: 50%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.07) 0%, rgba(37, 99, 235, 0.02) 40%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .network-svg {
+    overflow: visible;
+  }
+
+  /* ==== 波紋 ==== */
+  .ripple {
+    fill: none;
+    stroke: rgba(37, 99, 235, 0.35);
+    stroke-width: 1;
+    opacity: 0;
+    transform-origin: 250px 250px;
+    transform-box: fill-box;
+  }
+
+  .ripple-1 { animation: rippleOut 4.5s ease-out infinite; }
+  .ripple-2 { animation: rippleOut 4.5s ease-out infinite 1.5s; }
+  .ripple-3 { animation: rippleOut 4.5s ease-out infinite 3s; }
+
+  @keyframes rippleOut {
+    0% { transform: scale(0.3); opacity: 0; }
+    15% { opacity: 0.7; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+
+  /* ==== 線 ==== */
+  .link {
+    stroke: rgba(100, 116, 139, 0.28);
+    stroke-width: 1;
+    stroke-dasharray: 3, 4;
+  }
+
+  /* ==== 光の粒（ハブから外周ノードへ流れる） ==== */
+  .pulse {
+    fill: #2563eb;
+    filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.7));
+    opacity: 0;
+  }
+
+  .pulse-1 { animation: flow1 4s ease-in-out infinite 0s; }
+  .pulse-2 { animation: flow2 4.4s ease-in-out infinite 0.7s; }
+  .pulse-3 { animation: flow3 4.2s ease-in-out infinite 1.4s; }
+  .pulse-4 { animation: flow4 4.6s ease-in-out infinite 2.1s; }
+  .pulse-5 { animation: flow5 4.1s ease-in-out infinite 2.8s; }
+  .pulse-6 { animation: flow6 4.5s ease-in-out infinite 3.5s; }
+
+  /* 各ノードへのオフセット: (90,130) 相対=(-160,-120) etc. */
+  @keyframes flow1 {
+    0% { transform: translate(0, 0); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translate(-160px, -120px); opacity: 0; }
+  }
+  @keyframes flow2 {
+    0% { transform: translate(0, 0); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translate(160px, -150px); opacity: 0; }
+  }
+  @keyframes flow3 {
+    0% { transform: translate(0, 0); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translate(-120px, 150px); opacity: 0; }
+  }
+  @keyframes flow4 {
+    0% { transform: translate(0, 0); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translate(170px, 130px); opacity: 0; }
+  }
+  @keyframes flow5 {
+    0% { transform: translate(0, 0); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translate(0, -190px); opacity: 0; }
+  }
+  @keyframes flow6 {
+    0% { transform: translate(0, 0); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translate(0, 190px); opacity: 0; }
+  }
+
+  /* ==== 外周ノード ==== */
+  .node {
+    fill: #0f172a;
+  }
+
+  .node-halo {
+    fill: rgba(37, 99, 235, 0.12);
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: nodePulse 3s ease-in-out infinite;
+  }
+
+  .node-group-1 .node-halo { animation-delay: 0s; }
+  .node-group-2 .node-halo { animation-delay: 0.5s; }
+  .node-group-3 .node-halo { animation-delay: 1s; }
+  .node-group-4 .node-halo { animation-delay: 1.5s; }
+  .node-group-5 .node-halo { animation-delay: 2s; }
+  .node-group-6 .node-halo { animation-delay: 2.5s; }
+
+  @keyframes nodePulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* ==== 中央ハブ ==== */
+  .hub {
+    fill: #0f172a;
+  }
+
+  .hub-halo {
+    fill: rgba(37, 99, 235, 0.1);
+  }
+
+  .hub-ring {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 1.5;
+    opacity: 0.7;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: hubRing 2.8s ease-in-out infinite;
+  }
+
+  @keyframes hubRing {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.25); opacity: 0.25; }
+  }
+
+  /* ==== アクセシビリティ ==== */
+  @media (prefers-reduced-motion: reduce) {
+    .ripple,
+    .pulse,
+    .node-halo,
+    .hub-ring {
+      animation: none;
+    }
+    .pulse {
+      opacity: 0;
+    }
+    .ripple {
+      opacity: 0.3;
+    }
+  }
+</style>
